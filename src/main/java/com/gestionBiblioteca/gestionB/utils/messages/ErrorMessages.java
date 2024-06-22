@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 public class ErrorMessages {
   private final String mensaje = "";
 
-  public static String idNotFound(String entity) {
+  public static String IdNotFound(String entity) {
     final String message = "There are no records in the entity %s with the supplied id";
     return String.format(message, entity);
   }
