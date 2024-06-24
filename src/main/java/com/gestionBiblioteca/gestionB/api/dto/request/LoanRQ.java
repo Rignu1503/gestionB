@@ -6,15 +6,13 @@ import com.gestionBiblioteca.gestionB.utils.enums.StatusLoan;
 
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class LoanRQ {
   @NotNull(message = "Date is required")
   @FutureOrPresent(message = "Date cannot be in the past")

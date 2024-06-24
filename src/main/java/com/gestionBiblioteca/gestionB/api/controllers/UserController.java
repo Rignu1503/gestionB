@@ -1,6 +1,5 @@
 package com.gestionBiblioteca.gestionB.api.controllers;
 
-
 import com.gestionBiblioteca.gestionB.api.dto.request.UserRQ;
 import com.gestionBiblioteca.gestionB.api.dto.response.UserResponse;
 import com.gestionBiblioteca.gestionB.infrastructure.abtract_service.IUserService;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.Objects;
 
@@ -36,20 +34,18 @@ public class UserController {
         return ResponseEntity.ok(this.userService.create(userRQ));
     }
 
-
+    @ApiResponse(responseCode = "400", description = "It was not possible to send the information", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
     @GetMapping
     public ResponseEntity<Page<UserResponse>> getAll(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestHeader(required = false) SortType sortType
-    ) {
+            @RequestHeader(required = false) SortType sortType) {
         if (Objects.isNull(sortType))
             sortType = SortType.NONE;
 
-
         return ResponseEntity.ok(this.userService.getAll(page - 1, size, sortType));
     }
-
 
     @ApiResponse(responseCode = "400", description = "It was not possible to send the information", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
@@ -60,24 +56,24 @@ public class UserController {
         return ResponseEntity.ok(this.userService.get(id));
     }
 
+    @ApiResponse(responseCode = "400", description = "It was not possible to update the information", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
     @PutMapping(path = "/{id}")
-    public  ResponseEntity<UserResponse> update(
-            @PathVariable Long id,
+    public ResponseEntity<UserResponse> update(
+            @Validated @PathVariable Long id,
             @RequestBody UserRQ userRQ) {
-
+                
         return ResponseEntity.ok(this.userService.update(userRQ, id));
     }
 
+    @ApiResponse(responseCode = "400", description = "It was not possible to delete the information", content = {
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<UserResponse> delete(
-            @PathVariable Long id
-    ){
+            @PathVariable Long id) {
         this.userService.delete(id);
 
         return ResponseEntity.noContent().build();
     }
-
-
-
 
 }

@@ -28,8 +28,9 @@ public class LoanEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @Column(nullable = false)
-  private LocalDateTime loan_date = LocalDateTime.now();
+
+  private LocalDateTime loan_date;
+
   @Column(nullable = false)
   private LocalDateTime return_date;
   @Column(nullable = false, length = 20)
