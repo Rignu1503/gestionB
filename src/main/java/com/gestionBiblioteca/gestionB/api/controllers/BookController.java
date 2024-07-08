@@ -1,7 +1,7 @@
 package com.gestionBiblioteca.gestionB.api.controllers;
 
 import com.gestionBiblioteca.gestionB.api.dto.request.BookRQ;
-import com.gestionBiblioteca.gestionB.api.dto.response.BookResponse;
+import com.gestionBiblioteca.gestionB.api.dto.response.RelationsDTO.RelationsBookResponse;
 import com.gestionBiblioteca.gestionB.infrastructure.abtract_service.IBookService;
 import com.gestionBiblioteca.gestionB.utils.enums.SortType;
 
@@ -23,60 +23,60 @@ import java.util.Objects;
 @AllArgsConstructor
 public class BookController {
 
-    @Autowired
-    private IBookService bookSerivice;
+        @Autowired
+        private IBookService bookSerivice;
 
-    @ApiResponse(responseCode = "400", description = "It was not possible to send the information", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
+        @ApiResponse(responseCode = "400", description = "It was not possible to send the information", content = {
+                        @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
 
-    @PostMapping
-    public ResponseEntity<BookResponse> create(
-            @Validated @RequestBody BookRQ bookRQ) {
+        @PostMapping
+        public ResponseEntity<RelationsBookResponse> create(
+                        @Validated @RequestBody BookRQ bookRQ) {
 
-        return ResponseEntity.ok(bookSerivice.create(bookRQ));
-    }
+                return ResponseEntity.ok(bookSerivice.create(bookRQ));
+        }
 
-    @ApiResponse(responseCode = "400", description = "It was not possible to send the information", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
-    @GetMapping
-    public ResponseEntity<Page<BookResponse>> getAll(
-            @Validated @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestHeader(required = false) SortType sortType) {
-        if (Objects.isNull(sortType))
-            sortType = SortType.NONE;
+        @ApiResponse(responseCode = "400", description = "It was not possible to send the information", content = {
+                        @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
+        @GetMapping
+        public ResponseEntity<Page<RelationsBookResponse>> getAll(
+                        @Validated @RequestParam(defaultValue = "1") int page,
+                        @RequestParam(defaultValue = "10") int size,
+                        @RequestHeader(required = false) SortType sortType) {
+                if (Objects.isNull(sortType))
+                        sortType = SortType.NONE;
 
-        return ResponseEntity.ok(bookSerivice.getAll(page - 1, size, sortType));
-    }
+                return ResponseEntity.ok(bookSerivice.getAll(page - 1, size, sortType));
+        }
 
-    @ApiResponse(responseCode = "400", description = "It was not possible to send the information", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<BookResponse> getById(
-            @Validated @PathVariable Long id) {
+        @ApiResponse(responseCode = "400", description = "It was not possible to send the information", content = {
+                        @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
+        @GetMapping(path = "/{id}")
+        public ResponseEntity<RelationsBookResponse> getById(
+                        @Validated @PathVariable Long id) {
 
-        return ResponseEntity.ok(this.bookSerivice.get(id));
-    }
+                return ResponseEntity.ok(this.bookSerivice.get(id));
+        }
 
-    @ApiResponse(responseCode = "400", description = "It was not possible to update the information", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
-    @PutMapping(path = "/{id}")
-    public ResponseEntity<BookResponse> update(
-            @PathVariable Long id,
-            @Validated @RequestBody BookRQ bookRQ) {
+        @ApiResponse(responseCode = "400", description = "It was not possible to update the information", content = {
+                        @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
+        @PutMapping(path = "/{id}")
+        public ResponseEntity<RelationsBookResponse> update(
+                        @PathVariable Long id,
+                        @Validated @RequestBody BookRQ bookRQ) {
 
-        return ResponseEntity.ok(this.bookSerivice.update(bookRQ, id));
-    }
+                return ResponseEntity.ok(this.bookSerivice.update(bookRQ, id));
+        }
 
-    @ApiResponse(responseCode = "400", description = "It was not possible to delete the information", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
-    @DeleteMapping(path = "/{id}")
-    public ResponseEntity<BookResponse> delete(
-            @Validated @PathVariable Long id) {
+        @ApiResponse(responseCode = "400", description = "It was not possible to delete the information", content = {
+                        @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
+        @DeleteMapping(path = "/{id}")
+        public ResponseEntity<RelationsBookResponse> delete(
+                        @Validated @PathVariable Long id) {
 
-        this.bookSerivice.delete(id);
+                this.bookSerivice.delete(id);
 
-        return ResponseEntity.noContent().build();
-    }
+                return ResponseEntity.noContent().build();
+        }
 
 }

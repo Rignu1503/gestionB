@@ -1,7 +1,7 @@
 package com.gestionBiblioteca.gestionB.infrastructure.service;
 
 import com.gestionBiblioteca.gestionB.api.dto.request.BookRQ;
-import com.gestionBiblioteca.gestionB.api.dto.response.BookResponse;
+import com.gestionBiblioteca.gestionB.api.dto.response.RelationsDTO.RelationsBookResponse;
 import com.gestionBiblioteca.gestionB.api.exections.BadRequestException;
 import com.gestionBiblioteca.gestionB.domain.entities.BookEntity;
 import com.gestionBiblioteca.gestionB.domain.repositories.BookRepository;
@@ -15,7 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class BookSerivice implements IBookService {
 
@@ -26,28 +25,28 @@ public class BookSerivice implements IBookService {
     private BookMapper bookMapper;
 
     @Override
-    public BookResponse create(BookRQ request) {
+    public RelationsBookResponse create(BookRQ request) {
 
         BookEntity book = bookMapper.bookToBookEntity(request);
         BookEntity bookSaved = bookRepository.save(book);
 
-        return bookMapper.toBookResponse(bookSaved);
+        return bookMapper.toRelationsBookResponse(bookSaved);
     }
 
     @Override
-    public BookResponse get(Long id) {
-        return this.bookMapper.toBookResponse(this.find(id));
+    public RelationsBookResponse get(Long id) {
+        return this.bookMapper.toRelationsBookResponse(this.find(id));
     }
 
     @Override
-    public BookResponse update(BookRQ request, Long id) {
+    public RelationsBookResponse update(BookRQ request, Long id) {
 
         BookEntity book = this.find(id);
 
         bookMapper.updateBook(request, book);
         BookEntity bookSaved = bookRepository.save(book);
 
-        return bookMapper.toBookResponse(bookSaved);
+        return bookMapper.toRelationsBookResponse(bookSaved);
     }
 
     @Override
@@ -58,7 +57,7 @@ public class BookSerivice implements IBookService {
     }
 
     @Override
-    public Page<BookResponse> getAll(int page, int size, SortType sortType) {
+    public Page<RelationsBookResponse> getAll(int page, int size, SortType sortType) {
 
         if (page < 0)
             page = 0;
@@ -71,15 +70,14 @@ public class BookSerivice implements IBookService {
             case DESC -> pagination = PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).descending());
         }
 
-        return this.bookRepository.findAll(pagination).map(bookMapper::toBookResponse);
+        return this.bookRepository.findAll(pagination).map(bookMapper::toRelationsBookResponse);
 
     }
 
-    private BookEntity find(Long id){
+    private BookEntity find(Long id) {
 
         return this.bookRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException(ErrorMessages.IdNotFound("book")));
     }
-
 
 }

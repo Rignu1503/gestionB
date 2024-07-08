@@ -8,8 +8,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring")
-public interface RevervationMapper {
+@Mapper(componentModel = "spring" , uses = {UserMapper.class, BookMapper.class})
+public interface ReservationMapper {
 
 
     @Mappings({

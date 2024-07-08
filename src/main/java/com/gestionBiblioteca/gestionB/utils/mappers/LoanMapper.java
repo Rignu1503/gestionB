@@ -9,7 +9,7 @@ import com.gestionBiblioteca.gestionB.api.dto.response.LoanResponse;
 import com.gestionBiblioteca.gestionB.domain.entities.LoanEntity;
 import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {BookMapper.class, UserMapper.class})
 public interface LoanMapper {
 
     @Mappings({
@@ -23,4 +23,5 @@ public interface LoanMapper {
     LoanResponse toLeanResponse(LoanEntity loanEntity);
 
     void updateLoan(LoanRQ LoanRequest, @MappingTarget LoanEntity loanEntity);
+
 }
