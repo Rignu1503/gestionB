@@ -36,7 +36,7 @@ public class BookController {
                 return ResponseEntity.ok(bookSerivice.create(bookRQ));
         }
 
-        @ApiResponse(responseCode = "400", description = "It was not possible to send the information", content = {
+        @ApiResponse(responseCode = "400", description = "it was not possible to obtain the information", content = {
                         @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
         @GetMapping
         public ResponseEntity<Page<RelationsBookResponse>> getAll(
@@ -49,7 +49,7 @@ public class BookController {
                 return ResponseEntity.ok(bookSerivice.getAll(page - 1, size, sortType));
         }
 
-        @ApiResponse(responseCode = "400", description = "It was not possible to send the information", content = {
+        @ApiResponse(responseCode = "400", description = "it was not possible to obtain the information", content = {
                         @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
         @GetMapping(path = "/{id}")
         public ResponseEntity<RelationsBookResponse> getById(

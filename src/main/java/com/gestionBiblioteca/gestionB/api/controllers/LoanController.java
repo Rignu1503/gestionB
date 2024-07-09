@@ -28,12 +28,16 @@ public class LoanController {
     @Autowired
     private final ILoanService loanService;
 
+    @ApiResponse(responseCode = "400", description = "It was not possible to send the information", content = {
+        @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
     @PostMapping
     public ResponseEntity<LoanResponse> create(
             @Validated @RequestBody LoanRQ loanRQ) {
         return ResponseEntity.ok(loanService.create(loanRQ));
     }
 
+    @ApiResponse(responseCode = "400", description = "it was not possible to obtain the information", content = {
+        @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
     @GetMapping
     public ResponseEntity<Page<LoanResponse>> getAll(
             @Validated @RequestParam(defaultValue = "1") int page,
@@ -47,7 +51,8 @@ public class LoanController {
         return ResponseEntity.ok(loanService.getAll(page -1, size, sortType));
     }
 
-    @ApiResponse(responseCode = "400", description = "It was not possible to send the information", content = {
+
+    @ApiResponse(responseCode = "400", description = "it was not possible to obtain the information", content = {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
     @GetMapping(path = "/{id}")
     public ResponseEntity<LoanResponse> getById(
@@ -56,6 +61,8 @@ public class LoanController {
         return ResponseEntity.ok(this.loanService.get(id));
     }
 
+    @ApiResponse(responseCode = "400", description = "It was not possible to update the information", content = {
+        @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
     @PutMapping(path = "/{id}")
     public ResponseEntity<LoanResponse> update(
             @Validated @PathVariable Long id,
@@ -64,6 +71,9 @@ public class LoanController {
         return ResponseEntity.ok(this.loanService.update(loanRQ, id));
     }
 
+
+    @ApiResponse(responseCode = "400", description = "It was not possible to delete the information", content = {
+        @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) })
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<LoanResponse> delete(
             @Validated @PathVariable Long id) {
